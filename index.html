@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Biaya Sewa Kendaraan</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div class="header shadow-lg p-3 mb-3">
+        <img src="Logo_Asperda_Surabaya-removebg-preview (1).png" alt="Logo Kiri" /> <!-- Ganti dengan URL logo kiri -->
+        <h4>DPC ASPERDA SURABAYA</h4>
+        <img src="Logo ASPERDA hi rest (1) (1).png" alt="Logo Kanan" /> <!-- Ganti dengan URL logo kanan -->
+    </div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">Simulasi Biaya Layanan Sewa Kendaraan</div>
+        <div class="card-body">
+            <form id="sewaForm">
+                <div class="form-group">
+                    <label for="jarak">Jarak (Km):</label>
+                    <input type="number" class="form-control" id="jarak" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="titikAwal">Titik Awal:</label>
+                    <input type="text" class="form-control" id="titikAwal" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="titikTujuan">Titik Tujuan:</label>
+                    <input type="text" class="form-control" id="titikTujuan" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobil">Pilih Mobil:</label>
+                    <select class="form-control" id="mobil">
+                        <option value="Innova_Reborn">Innova Reborn Diesel 2400cc - Rp.400.000</option>
+                        <option value="Hiace_Premio">Hiace Premio 2800cc - Rp.800.000</option>
+                        <option value="Innova_Zenix">Innova Zenix Gasoline 2000cc - Rp.450.000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bbm">Jenis BBM:</label>
+                    <select class="form-control" id="bbm">
+                        <option value="Pertalite">Pertalite - Rp.10.000/liter</option>
+                        <option value="Biosolar">Biosolar - Rp.6800/liter</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggalMulai">Tanggal Mulai Sewa:</label>
+                    <input type="date" class="form-control" id="tanggalMulai" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tanggalSelesai">Tanggal Selesai Sewa:</label>
+                    <input type="date" class="form-control" id="tanggalSelesai" required>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="pakaiDriver">
+                    <label class="form-check-label" for="pakaiDriver">Gunakan Driver</label>
+                </div>
+                
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="jalurTol">
+                    <label class="form-check-label" for="jalurTol">Gunakan Jalur Tol</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="pulangPergi">
+                    <label class="form-check-label" for="pulangPergi">Pulang Pergi</label>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-block mt-4" onclick="hitungBiaya()">Hitung Jarak dan Biaya</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="hasil" class="result-card mt-4" style="display:none;">
+        <h4>Hasil Perhitungan</h4>
+        <div class="result-row"><span class="label">Titik Awal:</span><span class="value" id="hasilTitikAwal"></span></div>
+        <div class="result-row"><span class="label">Titik Tujuan:</span><span class="value" id="hasilTitikTujuan"></span></div>
+        <div class="result-row"><span class="label">Jarak:</span><span class="value" id="hasilJarak"></span></div>
+        <div class="result-row"><span class="label">Durasi Sewa:</span><span class="value" id="hasilDurasiSewa"></span></div>
+        <div class="result-row"><span class="label">Konsumsi BBM:</span><span class="value" id="hasilKonsumsiBBM"></span></div>
+        <div class="result-row"><span class="label">Biaya BBM:</span><span class="value" id="hasilBiayaBBM"></span></div>
+        <div class="result-row"><span class="label">Jenis Mobil:</span><span class="value" id="hasilJenisMobil"></span></div>
+        <div class="result-row"><span class="label">Biaya Sewa Mobil:</span><span class="value" id="hasilBiayaSewaMobil"></span></div>
+        <div class="result-row"><span class="label">Biaya Driver:</span><span class="value" id="hasilBiayaDriver"></span></div>
+        <div class="result-row"><span class="label">Biaya Inap:</span><span class="value" id="hasilBiayaInap"></span></div>
+        <div class="result-row"><span class="label">Biaya Makan Driver:</span><span class="value" id="hasilBiayaMakanDriver"></span></div>
+        <div class="result-row"><span class="label">Biaya Tol:</span><span class="value" id="hasilBiayaTol"></span></div>
+
+        <div class="total-cost">Total Biaya HPP: <span id="hasilTotalHPP"></span></div>
+        <div class="agent-cost">Harga ke Agent: <span id="hasilHargaKeAgent"></span></div>
+        <div class="customer-cost">Harga ke Customer: <span id="hasilHargaKeCustomer"></span></div>
+    </div>
+</div>
+<footer class="footer text-center bg-dark d-flex">
+    <div class="container">
+        <p class="text-light">Copyright &copy; 2024 Created by DPC ASPERDA SURABAYA</p>
+    </div>
+</footer>
+
+<script>
+   function hitungBiaya() {
+    // Mengambil data dari form
+    const jarak = parseFloat(document.getElementById('jarak').value);
+    const titikAwal = document.getElementById('titikAwal').value;
+    const titikTujuan = document.getElementById('titikTujuan').value;
+    const mobil = document.getElementById('mobil').value;
+    const bbm = document.getElementById('bbm').value;
+    const tanggalMulai = document.getElementById('tanggalMulai').value;
+    const tanggalSelesai = document.getElementById('tanggalSelesai').value;
+    const pakaiDriver = document.getElementById('pakaiDriver').checked;
+    const jalurTol = document.getElementById('jalurTol').checked;
+    const pulangPergi = document.getElementById('pulangPergi').checked;
+
+    // Menghitung durasi
+    const durasi = hitungDurasi(tanggalMulai, tanggalSelesai);
+
+    // Kalikan jarak dan biaya tambahan jika pulang pergi
+    const totalJarak = pulangPergi ? jarak * 2 : jarak;
+    const konsumsiBBM = (totalJarak / 7).toFixed(2);
+    const biayaBBM = hitungBiayaBBM(totalJarak, bbm);
+    const totalBiayaMobil = hitungBiayaMobil(mobil, durasi);
+    const biayaDriver = hitungBiayaDriver(totalJarak, durasi, pakaiDriver);
+    const biayaInap = hitungBiayaInap(durasi);
+    const biayaMakanDriver = pakaiDriver ? durasi * 50000 : 0;
+    const biayaTol = hitungBiayaTol(totalJarak, jalurTol);
+
+    // Total HPP
+    const totalHPP = biayaBBM + totalBiayaMobil + biayaDriver + biayaInap + biayaMakanDriver + biayaTol;
+
+    // Harga untuk Agent dan Customer
+    const hargaKeAgent = totalHPP * 1.1;
+    const hargaKeCustomer = totalHPP * 1.2;
+
+    // Menampilkan hasil perhitungan
+    document.getElementById('hasilTitikAwal').textContent = titikAwal;
+    document.getElementById('hasilTitikTujuan').textContent = titikTujuan;
+    document.getElementById('hasilJarak').textContent = `${totalJarak} Km`;
+    document.getElementById('hasilDurasiSewa').textContent = `${durasi} hari`;
+    document.getElementById('hasilKonsumsiBBM').textContent = `${konsumsiBBM} liter`;
+    document.getElementById('hasilBiayaBBM').textContent = `Rp. ${biayaBBM.toLocaleString()}`;
+    document.getElementById('hasilJenisMobil').textContent = mobil.replace(/_/g, ' ');
+    document.getElementById('hasilBiayaSewaMobil').textContent = `Rp. ${totalBiayaMobil.toLocaleString()}`;
+    document.getElementById('hasilBiayaDriver').textContent = `Rp. ${biayaDriver.toLocaleString()}`;
+    document.getElementById('hasilBiayaInap').textContent = `Rp. ${biayaInap.toLocaleString()}`;
+    document.getElementById('hasilBiayaMakanDriver').textContent = `Rp. ${biayaMakanDriver.toLocaleString()}`;
+    document.getElementById('hasilBiayaTol').textContent = `Rp. ${biayaTol.toLocaleString()}`;
+    document.getElementById('hasilTotalHPP').textContent = `Rp. ${totalHPP.toLocaleString()}`;
+    document.getElementById('hasilHargaKeAgent').textContent = `Rp. ${hargaKeAgent.toLocaleString()}`;
+    document.getElementById('hasilHargaKeCustomer').textContent = `Rp. ${hargaKeCustomer.toLocaleString()}`;
+
+    document.getElementById('hasil').style.display = 'block';
+}
+
+function hitungDurasi(tanggalMulai, tanggalSelesai) {
+    const mulai = new Date(tanggalMulai);
+    const selesai = new Date(tanggalSelesai);
+    const timeDiff = Math.abs(selesai - mulai);
+    return Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+}
+
+function hitungBiayaMobil(mobil, durasi) {
+    const hargaMobil = mobil === "Innova_Reborn" ? 400000 : mobil === "Hiace_Premio" ? 800000 : 450000;
+    return hargaMobil * durasi;
+}
+
+function hitungBiayaBBM(totalJarak, jenisBBM) {
+    const hargaPerLiter = jenisBBM === "Pertalite" ? 10000 : 6800;
+    return (totalJarak / 7) * hargaPerLiter;
+}
+
+function hitungBiayaDriver(totalJarak, durasi, pakaiDriver) {
+    if (!pakaiDriver) return 0;
+    const biayaPerHari = totalJarak > 500 ? 500000 : totalJarak > 30 ? 300000 : 200000;
+    return biayaPerHari * durasi;
+}
+
+function hitungBiayaInap(durasi) {
+    return durasi > 1 ? (durasi - 1) * 150000 : 0;
+}
+
+function hitungBiayaTol(totalJarak, jalurTol) {
+    return jalurTol ? totalJarak * 1000 : 0;
+}
+
+</script>
+</body>
+</html>
+
